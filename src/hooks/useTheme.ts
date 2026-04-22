@@ -10,18 +10,18 @@ export function useTheme() {
   useEffect(() => {
     const root = document.documentElement
     localStorage.setItem('theme', theme)
-    if (theme === 'system') {
-      root.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches)
-    } else {
-      root.classList.toggle('dark', theme === 'dark')
-    }
+    const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    root.classList.toggle('dark', isDark)
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#030712' : '#f9fafb')
   }, [theme])
 
   useEffect(() => {
     if (theme !== 'system') return
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e: MediaQueryListEvent) =>
+    const handler = (e: MediaQueryListEvent) => {
       document.documentElement.classList.toggle('dark', e.matches)
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', e.matches ? '#030712' : '#f9fafb')
+    }
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
   }, [theme])
