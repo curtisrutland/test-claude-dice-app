@@ -10,9 +10,13 @@ export function useTheme() {
   useEffect(() => {
     const root = document.documentElement
     localStorage.setItem('theme', theme)
-    const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const isDark =
+      theme === 'dark' ||
+      (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
     root.classList.toggle('dark', isDark)
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#030712' : '#f9fafb')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', isDark ? '#030712' : '#f9fafb')
   }, [theme])
 
   useEffect(() => {
@@ -20,7 +24,9 @@ export function useTheme() {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = (e: MediaQueryListEvent) => {
       document.documentElement.classList.toggle('dark', e.matches)
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', e.matches ? '#030712' : '#f9fafb')
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', e.matches ? '#030712' : '#f9fafb')
     }
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)

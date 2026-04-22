@@ -21,15 +21,15 @@ function App() {
   const { theme, setTheme } = useTheme()
 
   function addDie(sides: number) {
-    setSelectedDice(prev => [...prev, sides].sort((a, b) => b - a))
+    setSelectedDice((prev) => [...prev, sides].sort((a, b) => b - a))
   }
 
   function removeDie(index: number) {
-    setSelectedDice(prev => prev.filter((_, i) => i !== index))
+    setSelectedDice((prev) => prev.filter((_, i) => i !== index))
   }
 
   function rollDice(dice: number[]) {
-    const results = dice.map(sides => Math.floor(Math.random() * sides) + 1)
+    const results = dice.map((sides) => Math.floor(Math.random() * sides) + 1)
     const entry: RollEntry = {
       id: crypto.randomUUID(),
       timestamp: Date.now(),

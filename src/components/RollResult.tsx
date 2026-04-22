@@ -23,8 +23,12 @@ export default function RollResult({ roll }: Props) {
               aria-label={`d${sides}: ${roll.results[i]}`}
               className={`flex flex-col items-center justify-center w-14 h-16 rounded-lg ${c.tileBg}`}
             >
-              <span className={`text-xs font-medium ${c.tileLabel}`} aria-hidden="true">d{sides}</span>
-              <span className={`font-bold text-lg ${c.tileValue}`} aria-hidden="true">{roll.results[i]}</span>
+              <span className={`text-xs font-medium ${c.tileLabel}`} aria-hidden="true">
+                d{sides}
+              </span>
+              <span className={`font-bold text-lg ${c.tileValue}`} aria-hidden="true">
+                {roll.results[i]}
+              </span>
             </div>
           )
         })}

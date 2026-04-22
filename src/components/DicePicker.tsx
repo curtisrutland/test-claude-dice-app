@@ -10,10 +10,17 @@ interface Props {
   onRoll: () => void
 }
 
-export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClear, onRoll }: Props) {
-  const rollLabel = selectedDice.length > 0
-    ? `Roll ${selectedDice.length} ${selectedDice.length === 1 ? 'die' : 'dice'}`
-    : 'Roll dice'
+export default function DicePicker({
+  selectedDice,
+  onAddDie,
+  onRemoveDie,
+  onClear,
+  onRoll,
+}: Props) {
+  const rollLabel =
+    selectedDice.length > 0
+      ? `Roll ${selectedDice.length} ${selectedDice.length === 1 ? 'die' : 'dice'}`
+      : 'Roll dice'
 
   return (
     <section
@@ -21,11 +28,14 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
       aria-label="Dice picker"
     >
       <div>
-        <p id="dice-select-label" className="text-xs text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">
+        <p
+          id="dice-select-label"
+          className="text-xs text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide"
+        >
           Select dice
         </p>
         <div role="group" aria-labelledby="dice-select-label" className="flex flex-wrap gap-2">
-          {DICE_TYPES.map(sides => {
+          {DICE_TYPES.map((sides) => {
             const c = DICE_COLORS[sides]
             return (
               <button
@@ -43,7 +53,9 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
 
       <div aria-label="Selected dice" className="min-h-10">
         {selectedDice.length === 0 ? (
-          <p className="text-sm text-gray-600 dark:text-gray-400 py-1">No dice selected — click above to add</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400 py-1">
+            No dice selected — click above to add
+          </p>
         ) : (
           <ul aria-label="Selected dice" className="flex flex-wrap gap-2 items-center list-none">
             {selectedDice.map((sides, i) => {
