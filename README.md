@@ -38,3 +38,7 @@ npm run preview # preview the production build locally
 ```
 
 Deployment to GitHub Pages happens automatically on every push to `main`.
+
+## Credits
+
+- Favicon: [dice-d20](https://fontawesome.com/icons/dice-d20) by [Font Awesome](https://fontawesome.com), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
