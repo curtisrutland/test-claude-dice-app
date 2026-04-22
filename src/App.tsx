@@ -2,10 +2,16 @@ import { useState } from 'react'
 import type { RollEntry } from './types'
 import { useRollHistory } from './hooks/useRollHistory'
 import { useTheme } from './hooks/useTheme'
+import { formatDice } from './utils'
 import DicePicker from './components/DicePicker'
 import RollResult from './components/RollResult'
 import RollHistory from './components/RollHistory'
 import ThemeToggle from './components/ThemeToggle'
+
+function rollAnnouncement(roll: RollEntry): string {
+  const parts = roll.dice.map((s, i) => `d${s}: ${roll.results[i]}`)
+  return `Rolled ${formatDice(roll.dice)}. ${parts.join(', ')}. Total: ${roll.total}.`
+}
 
 function App() {
   const [selectedDice, setSelectedDice] = useState<number[]>([])
@@ -40,12 +46,17 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-6 transition-colors">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 p-6 transition-colors">
+      {/* Persistent live region — always in DOM so screen readers catch updates */}
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {currentRoll && rollAnnouncement(currentRoll)}
+      </div>
+
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
+        <header className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dice Roller</h1>
           <ThemeToggle theme={theme} onChange={setTheme} />
-        </div>
+        </header>
         <DicePicker
           selectedDice={selectedDice}
           onAddDie={addDie}
@@ -56,7 +67,7 @@ function App() {
         {currentRoll && <RollResult roll={currentRoll} />}
         <RollHistory history={history} onClear={clearHistory} onReroll={rollDice} />
       </div>
-    </div>
+    </main>
   )
 }
 
