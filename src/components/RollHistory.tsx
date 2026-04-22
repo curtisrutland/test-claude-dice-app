@@ -30,7 +30,9 @@ export default function RollHistory({ history, onClear }: Props) {
             <li key={entry.id} className="py-2 flex items-center gap-4 text-sm">
               <span className="text-gray-400 w-20 shrink-0">{formatTime(entry.timestamp)}</span>
               <span className="text-gray-600 flex-1">{formatDice(entry.dice)}</span>
-              <span className="text-gray-400 text-xs">[{entry.results.join(', ')}]</span>
+              <span className="text-gray-400 text-xs">
+                {entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')}
+              </span>
               <span className="font-semibold text-gray-900 w-8 text-right">{entry.total}</span>
             </li>
           ))}
