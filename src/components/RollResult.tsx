@@ -8,8 +8,8 @@ interface Props {
 
 export default function RollResult({ roll }: Props) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 space-y-3">
-      <p className="text-sm text-gray-500">{formatDice(roll.dice)}</p>
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5 space-y-3">
+      <p className="text-sm text-gray-500 dark:text-gray-400">{formatDice(roll.dice)}</p>
       <div className="flex flex-wrap gap-2">
         {roll.dice.map((sides, i) => {
           const c = DICE_COLORS[sides]
@@ -24,7 +24,7 @@ export default function RollResult({ roll }: Props) {
           )
         })}
       </div>
-      <p className="text-2xl font-bold text-gray-900">Total: {roll.total}</p>
+      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">Total: {roll.total}</p>
     </div>
   )
 }
