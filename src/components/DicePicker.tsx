@@ -88,10 +88,8 @@ export default function DicePicker({
         </button>
         {selectedDice.length > 0 && (
           <>
-            <span
-              aria-label={`Dice expression: ${formatDiceExpression(selectedDice)}`}
-              className="font-mono text-sm font-semibold text-gray-700 dark:text-gray-200"
-            >
+            <span className="font-mono text-sm font-semibold text-gray-700 dark:text-gray-200">
+              <span className="sr-only">Dice expression: </span>
               {formatDiceExpression(selectedDice)}
             </span>
             <button
