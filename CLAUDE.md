@@ -30,12 +30,13 @@ Single-page React + TypeScript app built with Vite. No routing. All state lives 
 1. User clicks a die button → `addDie(sides)` sorts `selectedDice` descending
 2. User clicks Roll → `rollDice(selectedDice)` generates results, builds a `RollEntry`, updates both `currentRoll` and history
 3. The same `rollDice` function is passed to `RollHistory` as `onReroll` so history entries can be re-rolled
+4. For advantage/disadvantage, `rollAdvantage(type)` rolls 2d20 and stores both results; `rollType` on the entry drives display in `RollResult` and `RollHistory`. Normal rolls leave `rollType` undefined.
 
 ### Key files
 
 | File                          | Purpose                                                                                                   |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `src/types.ts`                | `DICE_TYPES` constant, `DieType`, `RollEntry` interface                                                   |
+| `src/types.ts`                | `DICE_TYPES` constant, `DieType`, `RollType` (`'advantage' \| 'disadvantage'`), `RollEntry` interface     |
 | `src/diceColors.ts`           | Tailwind class strings per die type — keyed by `DieType`                                                  |
 | `src/utils.ts`                | `formatDice` (spaced, e.g. `1d20 + 2d6`), `formatDiceExpression` (compact, e.g. `1d20+2d6`), `formatTime` |
 | `src/hooks/useRollHistory.ts` | localStorage persistence, 100-entry cap                                                                   |

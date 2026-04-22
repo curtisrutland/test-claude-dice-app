@@ -45,7 +45,7 @@ function App() {
     addRoll(entry)
   }
 
-  function rollAdvantage(type: Exclude<RollType, 'normal'>) {
+  function rollAdvantage(type: RollType) {
     const r1 = Math.floor(Math.random() * 20) + 1
     const r2 = Math.floor(Math.random() * 20) + 1
     const total = type === 'advantage' ? Math.max(r1, r2) : Math.min(r1, r2)
@@ -62,7 +62,7 @@ function App() {
   }
 
   function reroll(dice: DieType[], rollType?: RollType) {
-    if (rollType === 'advantage' || rollType === 'disadvantage') {
+    if (rollType) {
       rollAdvantage(rollType)
     } else {
       rollDice(dice)

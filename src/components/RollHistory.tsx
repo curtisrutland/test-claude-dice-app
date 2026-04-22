@@ -36,7 +36,7 @@ export default function RollHistory({ history, onClear, onReroll }: Props) {
             const label = formatRollLabel(entry.dice, entry.rollType)
             const resultDetail = isAdvDisadv
               ? `d20: ${entry.results[0]}, d20: ${entry.results[1]}`
-              : entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')
+              : entry.dice.map((sides, i) => `d${sides}: ${entry.results[i]}`).join(', ')
             const ariaLabel = isAdvDisadv
               ? `${label}. Rolled ${entry.results[0]} and ${entry.results[1]}. Kept: ${entry.total}.`
               : `${label}. ${resultDetail}. Total: ${entry.total}`

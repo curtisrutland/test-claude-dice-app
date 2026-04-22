@@ -9,7 +9,7 @@ interface Props {
   onRemoveDie: (index: number) => void
   onClear: () => void
   onRoll: () => void
-  onAdvantageRoll: (type: Exclude<RollType, 'normal'>) => void
+  onAdvantageRoll: (type: RollType) => void
 }
 
 export default function DicePicker({
