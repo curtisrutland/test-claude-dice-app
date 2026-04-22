@@ -18,8 +18,24 @@ function discardedIndex(results: number[], rollType: RollType | undefined): numb
       : 0
 }
 
+function natClass(sides: number, result: number, highlight: boolean): 'nat20' | 'nat1' | null {
+  if (!highlight || sides !== 20) return null
+  if (result === 20) return 'nat20'
+  if (result === 1) return 'nat1'
+  return null
+}
+
+const NAT20_BG = 'bg-yellow-100 dark:bg-yellow-900/50'
+const NAT20_VALUE = 'text-yellow-700 dark:text-yellow-300'
+const NAT1_BG = 'bg-red-100 dark:bg-red-900/50'
+const NAT1_VALUE = 'text-red-700 dark:text-red-300'
+
 export default function RollResult({ roll }: Props) {
   const dropped = discardedIndex(roll.results, roll.rollType)
+  const highlightNats =
+    roll.rollType === 'advantage' ||
+    roll.rollType === 'disadvantage' ||
+    (roll.dice.length === 1 && roll.dice[0] === 20)
 
   return (
     <section
@@ -33,18 +49,23 @@ export default function RollResult({ roll }: Props) {
         {roll.dice.map((sides, i) => {
           const c = DICE_COLORS[sides]
           const isDropped = dropped === i
+          const nat = natClass(sides, roll.results[i], highlightNats)
+          const bgClass = nat === 'nat20' ? NAT20_BG : nat === 'nat1' ? NAT1_BG : c.tileBg
+          const valueClass =
+            nat === 'nat20' ? NAT20_VALUE : nat === 'nat1' ? NAT1_VALUE : c.tileValue
+          const natLabel = nat === 'nat20' ? ' (natural 20)' : nat === 'nat1' ? ' (natural 1)' : ''
           return (
             <div
               key={`${sides}-${i}`}
               role="listitem"
-              aria-label={`d${sides}: ${roll.results[i]}${isDropped ? ' (discarded)' : ''}`}
-              className={`flex flex-col items-center justify-center w-14 h-16 rounded-lg ${c.tileBg} ${isDropped ? 'opacity-40' : ''}`}
+              aria-label={`d${sides}: ${roll.results[i]}${natLabel}${isDropped ? ' (discarded)' : ''}`}
+              className={`flex flex-col items-center justify-center w-14 h-16 rounded-lg ${bgClass} ${isDropped ? 'opacity-40' : ''}`}
             >
               <span className={`text-xs font-medium ${c.tileLabel}`} aria-hidden="true">
                 d{sides}
               </span>
               <span
-                className={`font-bold text-lg ${c.tileValue} ${isDropped ? 'line-through' : ''}`}
+                className={`font-bold text-lg ${valueClass} ${isDropped ? 'line-through' : ''}`}
                 aria-hidden="true"
               >
                 {roll.results[i]}
