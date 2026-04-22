@@ -1,10 +1,10 @@
-import type { DieType, RollEntry } from '../types'
-import { formatDice, formatTime } from '../utils'
+import type { DieType, RollEntry, RollType } from '../types'
+import { formatRollLabel, formatTime } from '../utils'
 
 interface Props {
   history: RollEntry[]
   onClear: () => void
-  onReroll: (dice: DieType[]) => void
+  onReroll: (dice: DieType[], rollType?: RollType) => void
 }
 
 export default function RollHistory({ history, onClear, onReroll }: Props) {
@@ -32,28 +32,28 @@ export default function RollHistory({ history, onClear, onReroll }: Props) {
       ) : (
         <ul className="divide-y divide-gray-100 dark:divide-gray-700">
           {history.map((entry) => {
-            const diceSummary = formatDice(entry.dice)
-            const resultDetail = entry.dice
-              .map((sides, i) => `d${sides}:${entry.results[i]}`)
-              .join(', ')
+            const isAdvDisadv = entry.rollType === 'advantage' || entry.rollType === 'disadvantage'
+            const label = formatRollLabel(entry.dice, entry.rollType)
+            const resultDetail = isAdvDisadv
+              ? `d20: ${entry.results[0]}, d20: ${entry.results[1]}`
+              : entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')
+            const ariaLabel = isAdvDisadv
+              ? `${label}. Rolled ${entry.results[0]} and ${entry.results[1]}. Kept: ${entry.total}.`
+              : `${label}. ${resultDetail}. Total: ${entry.total}`
             return (
-              <li
-                key={entry.id}
-                className="py-3"
-                aria-label={`${diceSummary}. ${resultDetail}. Total: ${entry.total}`}
-              >
+              <li key={entry.id} className="py-3" aria-label={ariaLabel}>
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-medium text-gray-800 dark:text-gray-100 text-sm">
-                    {diceSummary}
+                    {label}
                   </span>
                   <div className="flex items-center gap-3 shrink-0">
                     <span className="font-bold text-gray-900 dark:text-gray-100">
                       {entry.total}
                     </span>
                     <button
-                      onClick={() => onReroll(entry.dice)}
-                      aria-label={`Reroll ${diceSummary}`}
-                      title={`Reroll ${diceSummary}`}
+                      onClick={() => onReroll(entry.dice, entry.rollType)}
+                      aria-label={`Reroll ${label}`}
+                      title={`Reroll ${label}`}
                       className="text-gray-400 hover:text-indigo-600 dark:text-gray-500 dark:hover:text-indigo-400 transition-colors text-base leading-none"
                     >
                       <span aria-hidden="true">↺</span>

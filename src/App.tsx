@@ -1,15 +1,20 @@
 import { useState } from 'react'
-import type { DieType, RollEntry } from './types'
+import type { DieType, RollEntry, RollType } from './types'
 import { useRollHistory } from './hooks/useRollHistory'
 import { useTheme } from './hooks/useTheme'
 import { formatDice } from './utils'
 import DicePicker from './components/DicePicker'
+import AdvantageRoller from './components/AdvantageRoller'
 import RollResult from './components/RollResult'
 import RollHistory from './components/RollHistory'
 import ThemeToggle from './components/ThemeToggle'
 import SiteFooter from './components/SiteFooter'
 
 function rollAnnouncement(roll: RollEntry): string {
+  if (roll.rollType === 'advantage' || roll.rollType === 'disadvantage') {
+    const label = roll.rollType === 'advantage' ? 'Advantage' : 'Disadvantage'
+    return `${label} d20: rolled ${roll.results[0]} and ${roll.results[1]}. Kept: ${roll.total}.`
+  }
   const parts = roll.dice.map((s, i) => `d${s}: ${roll.results[i]}`)
   return `Rolled ${formatDice(roll.dice)}. ${parts.join(', ')}. Total: ${roll.total}.`
 }
@@ -41,6 +46,30 @@ function App() {
     addRoll(entry)
   }
 
+  function rollAdvantage(type: Exclude<RollType, 'normal'>) {
+    const r1 = Math.floor(Math.random() * 20) + 1
+    const r2 = Math.floor(Math.random() * 20) + 1
+    const total = type === 'advantage' ? Math.max(r1, r2) : Math.min(r1, r2)
+    const entry: RollEntry = {
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      dice: [20, 20],
+      results: [r1, r2],
+      total,
+      rollType: type,
+    }
+    setCurrentRoll(entry)
+    addRoll(entry)
+  }
+
+  function reroll(dice: DieType[], rollType?: RollType) {
+    if (rollType === 'advantage' || rollType === 'disadvantage') {
+      rollAdvantage(rollType)
+    } else {
+      rollDice(dice)
+    }
+  }
+
   function roll() {
     if (selectedDice.length === 0) return
     rollDice(selectedDice)
@@ -66,8 +95,9 @@ function App() {
             onClear={() => setSelectedDice([])}
             onRoll={roll}
           />
+          <AdvantageRoller onRoll={rollAdvantage} />
           {currentRoll && <RollResult roll={currentRoll} />}
-          <RollHistory history={history} onClear={clearHistory} onReroll={rollDice} />
+          <RollHistory history={history} onClear={clearHistory} onReroll={reroll} />
         </div>
       </main>
 
