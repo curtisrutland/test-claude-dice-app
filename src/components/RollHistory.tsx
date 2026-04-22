@@ -33,33 +33,36 @@ export default function RollHistory({ history, onClear, onReroll }: Props) {
         <ul className="divide-y divide-gray-100 dark:divide-gray-700">
           {history.map(entry => {
             const diceSummary = formatDice(entry.dice)
-            const resultDetail = entry.dice.map((sides, i) => `d${sides}: ${entry.results[i]}`).join(', ')
+            const resultDetail = entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')
             return (
               <li
                 key={entry.id}
-                className="py-2 flex items-center gap-4 text-sm"
+                className="py-3"
                 aria-label={`${diceSummary}. ${resultDetail}. Total: ${entry.total}`}
               >
-                <span className="text-gray-600 dark:text-gray-400 w-20 shrink-0" aria-hidden="true">
-                  {formatTime(entry.timestamp)}
-                </span>
-                <span className="text-gray-600 dark:text-gray-300 flex-1" aria-hidden="true">
-                  {diceSummary}
-                </span>
-                <span className="text-gray-600 dark:text-gray-400 text-xs" aria-hidden="true">
-                  {entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')}
-                </span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100 w-8 text-right" aria-hidden="true">
-                  {entry.total}
-                </span>
-                <button
-                  onClick={() => onReroll(entry.dice)}
-                  aria-label={`Reroll ${diceSummary}`}
-                  title={`Reroll ${diceSummary}`}
-                  className="text-gray-400 hover:text-indigo-600 dark:text-gray-500 dark:hover:text-indigo-400 transition-colors text-base leading-none"
-                >
-                  <span aria-hidden="true">↺</span>
-                </button>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-gray-800 dark:text-gray-100 text-sm">
+                    {diceSummary}
+                  </span>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <span className="font-bold text-gray-900 dark:text-gray-100">
+                      {entry.total}
+                    </span>
+                    <button
+                      onClick={() => onReroll(entry.dice)}
+                      aria-label={`Reroll ${diceSummary}`}
+                      title={`Reroll ${diceSummary}`}
+                      className="text-gray-400 hover:text-indigo-600 dark:text-gray-500 dark:hover:text-indigo-400 transition-colors text-base leading-none"
+                    >
+                      <span aria-hidden="true">↺</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-2 mt-1 text-xs text-gray-500 dark:text-gray-400" aria-hidden="true">
+                  <span>{formatTime(entry.timestamp)}</span>
+                  <span>·</span>
+                  <span>{resultDetail}</span>
+                </div>
               </li>
             )
           })}
