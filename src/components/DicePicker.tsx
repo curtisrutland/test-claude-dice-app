@@ -1,10 +1,10 @@
-import { DICE_TYPES } from '../types'
+import { DICE_TYPES, type DieType } from '../types'
 import { DICE_COLORS } from '../diceColors'
 import { formatDiceExpression } from '../utils'
 
 interface Props {
-  selectedDice: number[]
-  onAddDie: (sides: number) => void
+  selectedDice: DieType[]
+  onAddDie: (sides: DieType) => void
   onRemoveDie: (index: number) => void
   onClear: () => void
   onRoll: () => void
@@ -51,7 +51,7 @@ export default function DicePicker({
         </div>
       </div>
 
-      <div aria-label="Selected dice" className="min-h-10">
+      <div className="min-h-10">
         {selectedDice.length === 0 ? (
           <p className="text-sm text-gray-600 dark:text-gray-400 py-1">
             No dice selected — click above to add
@@ -61,7 +61,7 @@ export default function DicePicker({
             {selectedDice.map((sides, i) => {
               const c = DICE_COLORS[sides]
               return (
-                <li key={i}>
+                <li key={`${sides}-${i}`}>
                   <button
                     onClick={() => onRemoveDie(i)}
                     aria-label={`Remove d${sides}`}

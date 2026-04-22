@@ -15,7 +15,11 @@ export function useRollHistory() {
   })
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(history))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history))
+    } catch (error) {
+      console.error('Failed to save roll history:', error)
+    }
   }, [history])
 
   function addRoll(entry: RollEntry) {

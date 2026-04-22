@@ -1,10 +1,10 @@
-import type { RollEntry } from '../types'
+import type { DieType, RollEntry } from '../types'
 import { formatDice, formatTime } from '../utils'
 
 interface Props {
   history: RollEntry[]
   onClear: () => void
-  onReroll: (dice: number[]) => void
+  onReroll: (dice: DieType[]) => void
 }
 
 export default function RollHistory({ history, onClear, onReroll }: Props) {

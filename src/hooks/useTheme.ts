@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react'
 export type Theme = 'light' | 'dark' | 'system'
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>(
-    () => (localStorage.getItem('theme') as Theme) ?? 'system'
-  )
+  const [theme, setThemeState] = useState<Theme>(() => {
+    const stored = localStorage.getItem('theme')
+    const VALID: Theme[] = ['light', 'dark', 'system']
+    return VALID.includes(stored as Theme) ? (stored as Theme) : 'system'
+  })
 
   useEffect(() => {
     const root = document.documentElement
