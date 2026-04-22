@@ -32,10 +32,8 @@ const NAT1_VALUE = 'text-red-700 dark:text-red-300'
 
 export default function RollResult({ roll }: Props) {
   const dropped = discardedIndex(roll.results, roll.rollType)
-  const highlightNats =
-    roll.rollType === 'advantage' ||
-    roll.rollType === 'disadvantage' ||
-    (roll.dice.length === 1 && roll.dice[0] === 20)
+  const isAdvDisadv = roll.rollType !== undefined
+  const highlightNats = isAdvDisadv || (roll.dice.length === 1 && roll.dice[0] === 20)
 
   return (
     <section
@@ -75,8 +73,7 @@ export default function RollResult({ roll }: Props) {
         })}
       </div>
       <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-        {roll.rollType === 'advantage' || roll.rollType === 'disadvantage' ? 'Result' : 'Total'}:{' '}
-        {roll.total}
+        {isAdvDisadv ? 'Result' : 'Total'}: {roll.total}
       </p>
     </section>
   )
