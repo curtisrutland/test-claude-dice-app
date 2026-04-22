@@ -2,6 +2,14 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  /* Prevent iOS Safari overscroll from revealing white background */
+  html {
+    background-color: #f9fafb; /* gray-50 */
+  }
+  html.dark {
+    background-color: #030712; /* gray-950 */
+  }
+
   *:focus-visible {
     outline: 2px solid #6366f1;
     outline-offset: 2px;
