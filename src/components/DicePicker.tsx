@@ -41,7 +41,7 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
                 key={i}
                 onClick={() => onRemoveDie(i)}
                 title="Click to remove"
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${c.buttonBg} ${c.buttonText} hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-900 dark:hover:text-red-300`}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${c.buttonBg} ${c.buttonText} hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-600 dark:hover:text-gray-200`}
               >
                 d{sides} ×
               </button>

@@ -4,9 +4,10 @@ import { formatDice, formatTime } from '../utils'
 interface Props {
   history: RollEntry[]
   onClear: () => void
+  onReroll: (dice: number[]) => void
 }
 
-export default function RollHistory({ history, onClear }: Props) {
+export default function RollHistory({ history, onClear, onReroll }: Props) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5">
       <div className="flex items-center justify-between mb-4">
@@ -34,6 +35,13 @@ export default function RollHistory({ history, onClear }: Props) {
                 {entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')}
               </span>
               <span className="font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{entry.total}</span>
+              <button
+                onClick={() => onReroll(entry.dice)}
+                title="Reroll"
+                className="text-gray-400 hover:text-indigo-600 dark:text-gray-500 dark:hover:text-indigo-400 transition-colors text-base leading-none"
+              >
+                ↺
+              </button>
             </li>
           ))}
         </ul>

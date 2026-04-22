@@ -21,18 +21,22 @@ function App() {
     setSelectedDice(prev => prev.filter((_, i) => i !== index))
   }
 
-  function roll() {
-    if (selectedDice.length === 0) return
-    const results = selectedDice.map(sides => Math.floor(Math.random() * sides) + 1)
+  function rollDice(dice: number[]) {
+    const results = dice.map(sides => Math.floor(Math.random() * sides) + 1)
     const entry: RollEntry = {
       id: crypto.randomUUID(),
       timestamp: Date.now(),
-      dice: [...selectedDice],
+      dice: [...dice],
       results,
       total: results.reduce((a, b) => a + b, 0),
     }
     setCurrentRoll(entry)
     addRoll(entry)
+  }
+
+  function roll() {
+    if (selectedDice.length === 0) return
+    rollDice(selectedDice)
   }
 
   return (
@@ -50,7 +54,7 @@ function App() {
           onRoll={roll}
         />
         {currentRoll && <RollResult roll={currentRoll} />}
-        <RollHistory history={history} onClear={clearHistory} />
+        <RollHistory history={history} onClear={clearHistory} onReroll={rollDice} />
       </div>
     </div>
   )
