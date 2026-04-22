@@ -1,18 +1,20 @@
-function buildDiceGroups(dice: number[]): string[] {
-  const counts: Record<number, number> = {}
+import type { DieType } from './types'
+
+function buildDiceGroups(dice: DieType[]): string[] {
+  const counts: Partial<Record<DieType, number>> = {}
   for (const d of dice) {
     counts[d] = (counts[d] ?? 0) + 1
   }
-  return Object.entries(counts)
+  return (Object.entries(counts) as [string, number][])
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([sides, count]) => `${count}d${sides}`)
 }
 
-export function formatDice(dice: number[]): string {
+export function formatDice(dice: DieType[]): string {
   return buildDiceGroups(dice).join(' + ')
 }
 
-export function formatDiceExpression(dice: number[]): string {
+export function formatDiceExpression(dice: DieType[]): string {
   return buildDiceGroups(dice).join('+')
 }
 

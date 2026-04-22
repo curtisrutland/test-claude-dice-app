@@ -4,14 +4,22 @@ export type Theme = 'light' | 'dark' | 'system'
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => {
-    const stored = localStorage.getItem('theme')
-    const VALID: Theme[] = ['light', 'dark', 'system']
-    return VALID.includes(stored as Theme) ? (stored as Theme) : 'system'
+    try {
+      const stored = localStorage.getItem('theme')
+      const VALID: Theme[] = ['light', 'dark', 'system']
+      return VALID.includes(stored as Theme) ? (stored as Theme) : 'system'
+    } catch {
+      return 'system'
+    }
   })
 
   useEffect(() => {
     const root = document.documentElement
-    localStorage.setItem('theme', theme)
+    try {
+      localStorage.setItem('theme', theme)
+    } catch {
+      // storage unavailable; preference won't persist
+    }
     const isDark =
       theme === 'dark' ||
       (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
