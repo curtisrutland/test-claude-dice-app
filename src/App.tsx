@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { RollEntry } from './types'
+import type { DieType, RollEntry } from './types'
 import { useRollHistory } from './hooks/useRollHistory'
 import { useTheme } from './hooks/useTheme'
 import { formatDice } from './utils'
@@ -15,12 +15,12 @@ function rollAnnouncement(roll: RollEntry): string {
 }
 
 function App() {
-  const [selectedDice, setSelectedDice] = useState<number[]>([])
+  const [selectedDice, setSelectedDice] = useState<DieType[]>([])
   const [currentRoll, setCurrentRoll] = useState<RollEntry | null>(null)
   const { history, addRoll, clearHistory } = useRollHistory()
   const { theme, setTheme } = useTheme()
 
-  function addDie(sides: number) {
+  function addDie(sides: DieType) {
     setSelectedDice((prev) => [...prev, sides].sort((a, b) => b - a))
   }
 
@@ -28,7 +28,7 @@ function App() {
     setSelectedDice((prev) => prev.filter((_, i) => i !== index))
   }
 
-  function rollDice(dice: number[]) {
+  function rollDice(dice: DieType[]) {
     const results = dice.map((sides) => Math.floor(Math.random() * sides) + 1)
     const entry: RollEntry = {
       id: crypto.randomUUID(),

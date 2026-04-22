@@ -4,7 +4,7 @@ export type DieType = (typeof DICE_TYPES)[number]
 export interface RollEntry {
   id: string
   timestamp: number
-  dice: number[]
+  dice: DieType[]
   results: number[]
   total: number
 }

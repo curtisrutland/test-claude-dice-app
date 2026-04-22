@@ -18,7 +18,7 @@ export default function RollResult({ roll }: Props) {
           const c = DICE_COLORS[sides]
           return (
             <div
-              key={i}
+              key={`${sides}-${i}`}
               role="listitem"
               aria-label={`d${sides}: ${roll.results[i]}`}
               className={`flex flex-col items-center justify-center w-14 h-16 rounded-lg ${c.tileBg}`}

@@ -1,3 +1,5 @@
+import type { DieType } from './types'
+
 interface DiceColors {
   buttonBg: string
   buttonText: string
@@ -7,7 +9,7 @@ interface DiceColors {
   tileValue: string
 }
 
-export const DICE_COLORS: Record<number, DiceColors> = {
+export const DICE_COLORS: Record<DieType, DiceColors> = {
   4: {
     buttonBg: 'bg-rose-100 dark:bg-rose-900',
     buttonText: 'text-rose-800 dark:text-rose-200',
