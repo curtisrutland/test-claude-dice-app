@@ -1,4 +1,4 @@
-import type { DieType } from './types'
+import type { DieType, RollType } from './types'
 
 function buildDiceGroups(dice: DieType[]): string[] {
   const counts: Partial<Record<DieType, number>> = {}
@@ -20,4 +20,10 @@ export function formatDiceExpression(dice: DieType[]): string {
 
 export function formatTime(timestamp: number): string {
   return new Date(timestamp).toLocaleTimeString()
+}
+
+export function formatRollLabel(dice: DieType[], rollType?: RollType): string {
+  if (rollType === 'advantage') return 'Advantage (d20)'
+  if (rollType === 'disadvantage') return 'Disadvantage (d20)'
+  return formatDice(dice)
 }
