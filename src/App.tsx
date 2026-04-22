@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import type { RollEntry } from './types'
 import { useRollHistory } from './hooks/useRollHistory'
+import { useTheme } from './hooks/useTheme'
 import DicePicker from './components/DicePicker'
 import RollResult from './components/RollResult'
 import RollHistory from './components/RollHistory'
+import ThemeToggle from './components/ThemeToggle'
 
 function App() {
   const [selectedDice, setSelectedDice] = useState<number[]>([])
   const [currentRoll, setCurrentRoll] = useState<RollEntry | null>(null)
   const { history, addRoll, clearHistory } = useRollHistory()
+  const { theme, setTheme } = useTheme()
 
   function addDie(sides: number) {
     setSelectedDice(prev => [...prev, sides])
@@ -33,9 +36,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-6 transition-colors">
       <div className="max-w-2xl mx-auto space-y-6">
-        <h1 className="text-3xl font-bold text-gray-900">Dice Roller</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dice Roller</h1>
+          <ThemeToggle theme={theme} onChange={setTheme} />
+        </div>
         <DicePicker
           selectedDice={selectedDice}
           onAddDie={addDie}
