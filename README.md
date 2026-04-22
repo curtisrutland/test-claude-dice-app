@@ -1,5 +1,7 @@
 # Dice Roller
 
+> **Experiment:** This entire project — every line of code, every feature, every commit — was created exclusively through conversation with [Claude](https://claude.ai) on iOS. No code was written by hand.
+
 A simple, accessible dice roller for tabletop RPGs such as D&D. Select any combination of standard dice, roll them, and track your history — all in the browser.
 
 **Live site:** https://curtisrutland.github.io/test-claude-dice-app/
