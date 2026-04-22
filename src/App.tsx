@@ -21,7 +21,7 @@ function App() {
   const { theme, setTheme } = useTheme()
 
   function addDie(sides: number) {
-    setSelectedDice(prev => [...prev, sides])
+    setSelectedDice(prev => [...prev, sides].sort((a, b) => b - a))
   }
 
   function removeDie(index: number) {

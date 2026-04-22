@@ -1,5 +1,6 @@
 import { DICE_TYPES } from '../types'
 import { DICE_COLORS } from '../diceColors'
+import { formatDiceExpression } from '../utils'
 
 interface Props {
   selectedDice: number[]
@@ -63,7 +64,7 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
         )}
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex items-center gap-3">
         <button
           onClick={onRoll}
           disabled={selectedDice.length === 0}
@@ -71,16 +72,24 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
           aria-disabled={selectedDice.length === 0}
           className="px-6 py-2 rounded-lg bg-indigo-600 dark:bg-indigo-500 text-white font-semibold hover:bg-indigo-700 dark:hover:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
-          Roll{selectedDice.length > 0 ? ` (${selectedDice.length})` : ''}
+          Roll
         </button>
         {selectedDice.length > 0 && (
-          <button
-            onClick={onClear}
-            aria-label="Clear all selected dice"
-            className="px-4 py-2 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          >
-            Clear
-          </button>
+          <>
+            <span
+              aria-label={`Dice expression: ${formatDiceExpression(selectedDice)}`}
+              className="font-mono text-sm font-semibold text-gray-700 dark:text-gray-200"
+            >
+              {formatDiceExpression(selectedDice)}
+            </span>
+            <button
+              onClick={onClear}
+              aria-label="Clear all selected dice"
+              className="px-4 py-2 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              Clear
+            </button>
+          </>
         )}
       </div>
     </section>
