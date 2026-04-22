@@ -1,4 +1,5 @@
 import { DICE_TYPES } from '../types'
+import { DICE_COLORS } from '../diceColors'
 
 interface Props {
   selectedDice: number[]
@@ -14,15 +15,18 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
       <div>
         <p className="text-xs text-gray-500 mb-2 uppercase tracking-wide">Select dice</p>
         <div className="flex flex-wrap gap-2">
-          {DICE_TYPES.map(sides => (
-            <button
-              key={sides}
-              onClick={() => onAddDie(sides)}
-              className="px-4 py-2 rounded-lg bg-indigo-100 text-indigo-800 font-semibold hover:bg-indigo-200 transition-colors"
-            >
-              d{sides}
-            </button>
-          ))}
+          {DICE_TYPES.map(sides => {
+            const c = DICE_COLORS[sides]
+            return (
+              <button
+                key={sides}
+                onClick={() => onAddDie(sides)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${c.buttonBg} ${c.buttonText} ${c.buttonHover}`}
+              >
+                d{sides}
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -30,16 +34,19 @@ export default function DicePicker({ selectedDice, onAddDie, onRemoveDie, onClea
         {selectedDice.length === 0 ? (
           <p className="text-sm text-gray-400">No dice selected — click above to add</p>
         ) : (
-          selectedDice.map((sides, i) => (
-            <button
-              key={i}
-              onClick={() => onRemoveDie(i)}
-              title="Click to remove"
-              className="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-red-100 hover:text-red-700 transition-colors"
-            >
-              d{sides} ×
-            </button>
-          ))
+          selectedDice.map((sides, i) => {
+            const c = DICE_COLORS[sides]
+            return (
+              <button
+                key={i}
+                onClick={() => onRemoveDie(i)}
+                title="Click to remove"
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${c.buttonBg} ${c.buttonText} hover:bg-red-100 hover:text-red-700`}
+              >
+                d{sides} ×
+              </button>
+            )
+          })
         )}
       </div>
 
