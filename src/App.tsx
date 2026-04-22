@@ -4,7 +4,6 @@ import { useRollHistory } from './hooks/useRollHistory'
 import { useTheme } from './hooks/useTheme'
 import { formatDice } from './utils'
 import DicePicker from './components/DicePicker'
-import AdvantageRoller from './components/AdvantageRoller'
 import RollResult from './components/RollResult'
 import RollHistory from './components/RollHistory'
 import ThemeToggle from './components/ThemeToggle'
@@ -94,8 +93,8 @@ function App() {
             onRemoveDie={removeDie}
             onClear={() => setSelectedDice([])}
             onRoll={roll}
+            onAdvantageRoll={rollAdvantage}
           />
-          <AdvantageRoller onRoll={rollAdvantage} />
           {currentRoll && <RollResult roll={currentRoll} />}
           <RollHistory history={history} onClear={clearHistory} onReroll={reroll} />
         </div>
