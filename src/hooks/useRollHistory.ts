@@ -19,7 +19,7 @@ export function useRollHistory() {
   }, [history])
 
   function addRoll(entry: RollEntry) {
-    setHistory(prev => [entry, ...prev].slice(0, MAX_HISTORY))
+    setHistory((prev) => [entry, ...prev].slice(0, MAX_HISTORY))
   }
 
   function clearHistory() {

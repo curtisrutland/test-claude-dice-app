@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,12 +7,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Dice Roller</title>
     <script>
-      (function () {
-        var LIGHT = '#f9fafb', DARK = '#030712'
+      ;(function () {
+        var LIGHT = '#f9fafb',
+          DARK = '#030712'
         var t = localStorage.getItem('theme') ?? 'system'
-        var isDark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        var isDark =
+          t === 'dark' ||
+          (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
         if (isDark) document.documentElement.classList.add('dark')
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? DARK : LIGHT)
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', isDark ? DARK : LIGHT)
       })()
     </script>
   </head>

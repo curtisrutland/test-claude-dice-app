@@ -2,8 +2,8 @@ import { Sun, Moon, Monitor } from 'lucide-react'
 import type { Theme } from '../hooks/useTheme'
 
 const OPTIONS: { value: Theme; label: string; Icon: React.ElementType }[] = [
-  { value: 'light',  label: 'Light theme',  Icon: Sun     },
-  { value: 'dark',   label: 'Dark theme',   Icon: Moon    },
+  { value: 'light', label: 'Light theme', Icon: Sun },
+  { value: 'dark', label: 'Dark theme', Icon: Moon },
   { value: 'system', label: 'System theme', Icon: Monitor },
 ]
 

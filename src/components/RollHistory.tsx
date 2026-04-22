@@ -31,9 +31,11 @@ export default function RollHistory({ history, onClear, onReroll }: Props) {
         <p className="text-sm text-gray-600 dark:text-gray-400">No rolls yet.</p>
       ) : (
         <ul className="divide-y divide-gray-100 dark:divide-gray-700">
-          {history.map(entry => {
+          {history.map((entry) => {
             const diceSummary = formatDice(entry.dice)
-            const resultDetail = entry.dice.map((sides, i) => `d${sides}:${entry.results[i]}`).join(', ')
+            const resultDetail = entry.dice
+              .map((sides, i) => `d${sides}:${entry.results[i]}`)
+              .join(', ')
             return (
               <li
                 key={entry.id}
@@ -58,7 +60,10 @@ export default function RollHistory({ history, onClear, onReroll }: Props) {
                     </button>
                   </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-x-2 mt-1 text-xs text-gray-500 dark:text-gray-400" aria-hidden="true">
+                <div
+                  className="flex flex-wrap items-center gap-x-2 mt-1 text-xs text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                >
                   <span>{formatTime(entry.timestamp)}</span>
                   <span>·</span>
                   <span>{resultDetail}</span>
